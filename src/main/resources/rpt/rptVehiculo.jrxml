@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptVehiculo" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0353217f-d59c-4b83-bb06-21c8f1e60c10">
+	<property name="ireport.zoom" value="0.9075000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="FINICIO" class="java.lang.String"/>
+	<parameter name="FFIN" class="java.lang.String"/>
+	<parameter name="REPORTE" class="java.lang.String"/>
+	<field name="nomDestino" class="java.lang.String"/>
+	<field name="nomVehiculo" class="java.lang.String"/>
+	<field name="canViaje" class="java.lang.Integer"/>
+	<field name="diesel" class="java.lang.Integer"/>
+	<group name="destino">
+		<groupExpression><![CDATA[$F{nomDestino}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="802" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="51dd2e27-eafd-4708-b1b2-bd01d232bfba"/>
+					<textField>
+						<reportElement style="SubTitle" x="103" y="0" width="699" height="20" forecolor="#736343" uuid="f05ff43c-7a7c-4048-a919-1b334f6966f7"/>
+						<textElement verticalAlignment="Middle">
+							<font size="16" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{nomDestino}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement style="Column header" x="22" y="0" width="70" height="20" forecolor="#736343" uuid="78a8846b-c11f-4439-abbe-96ed52e5c022"/>
+						<textElement verticalAlignment="Middle">
+							<font size="15" isBold="true"/>
+						</textElement>
+						<text><![CDATA[Destino:]]></text>
+					</staticText>
+				</frame>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="116" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="303" y="62" width="61" height="22" uuid="d53745bd-7f19-4939-9eb2-4912b11f85db"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[De: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="303" y="84" width="61" height="22" uuid="96ec3658-49c2-4c12-b358-58a7a89c2da0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Hasta: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="364" y="62" width="135" height="22" uuid="049dfc3b-3047-4e0c-8587-06f355112b26"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FINICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="84" width="135" height="22" uuid="d7725a52-148b-4abc-b8ac-ea5af2ae65da"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FFIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="1" y="0" width="801" height="62" uuid="7c15a952-56a7-4934-85c5-fc7309fbe53a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="50"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORTE}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement stretchType="RelativeToTallestObject" x="1" y="0" width="90" height="85" uuid="97243d9b-42b8-46ff-8537-87f646881792"/>
+				<imageExpression><![CDATA["img\\logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="183" y="0" width="137" height="15" forecolor="#736343" uuid="3ec0f62b-92ce-43b7-99db-2ce9508cf561"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Placa]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="f56bd2a1-4188-477f-82a1-1cd6677fff25"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="319" y="0" width="100" height="15" forecolor="#736343" uuid="85eedd3c-cdf5-4a58-8175-bdf2007a98c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Viajes ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="418" y="0" width="106" height="15" forecolor="#736343" uuid="5e4a5592-a997-431b-a202-e44422b4437d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Diesel]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="204" y="0" width="77" height="15" uuid="fcb59fc3-da1e-4996-b77c-e60c226e969f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomVehiculo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="320" y="0" width="63" height="15" uuid="34b2c815-b2bc-4f56-8cb8-1ed1676aa2eb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{canViaje}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="420" y="0" width="69" height="15" uuid="beecd4ec-fefa-452b-822c-0fe46828665b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diesel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="e862ca03-af70-4c3e-b6e7-afc880ddd2d5"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="802" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="c54ceca9-5264-4f68-89a9-7c7c836d979b"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="762" y="1" width="40" height="20" forecolor="#736343" uuid="43b7a77f-8ab9-41f1-acbb-449f462ed446"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="682" y="1" width="80" height="20" forecolor="#736343" uuid="edb6c0a0-ef21-4b56-b543-5ef5f3cc676a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="a7a0082a-adb9-4d97-bd2d-71b31abb5331"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="161">
+			<staticText>
+				<reportElement style="Column header" x="409" y="126" width="106" height="15" forecolor="#736343" uuid="77aa5b2d-2663-4008-bf05-9d4853012cb2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Diesel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="310" y="126" width="100" height="15" forecolor="#736343" uuid="d28df248-c6c5-4b83-84cd-111696c77561"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Viajes ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="174" y="126" width="137" height="15" forecolor="#736343" uuid="b1070c6b-b348-4a59-a270-9149ba5ae63a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Placa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="141" width="571" height="20" uuid="b044f876-e37f-4872-8e3c-96b268e5b01a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[No existe información]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="364" y="74" width="135" height="22" uuid="6dc57322-0771-4c56-9c38-df56b385ac37"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FINICIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="SubTitle" x="303" y="96" width="61" height="22" uuid="c1e0a403-a4d4-474a-bc14-411828ad9820"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Hasta: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="12" width="801" height="62" uuid="19593b49-894c-41ab-8a94-3f3f0a718671"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="50"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORTE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="SubTitle" x="303" y="74" width="61" height="22" uuid="2584fd8e-8dfe-49e6-825a-6aeb724dda04"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[De: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="364" y="96" width="135" height="22" uuid="79115c49-2714-45f9-b16b-62647c67aa45"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FFIN}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="4" y="12" width="90" height="85" uuid="54372c8b-3f77-424c-9f85-45e9f6f3e2a7"/>
+				<imageExpression><![CDATA["img\\logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</noData>
+</jasperReport>

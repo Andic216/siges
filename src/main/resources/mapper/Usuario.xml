@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="usuarioXml">
+
+	<resultMap id="rslt" type="usua">
+		<result property="id" column="ID" />
+		<result property="rol" column="ROL" />
+		<result property="nombre" column="NOMBRE" />
+		<result property="usuario" column="USUARIO" />
+		<result property="estado" column="ESTADO" />
+	</resultMap>
+
+	<select id="get" resultMap="rslt" parameterType="usua">
+		SELECT ID, NOMBRE, ESTADO, USUARIO, ROL
+		from TBL_USUARIO		
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="usuario!=null and usuario!=''">
+				and USUARIO = #{usuario}
+			</if>
+			<if test="clave!=null and clave!=''">
+				and CLAVE = #{clave}
+			</if>
+		</where>
+	</select>
+
+</mapper>

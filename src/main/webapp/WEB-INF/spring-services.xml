@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/cache 
+		http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="pe.org.ac.siges.service, pe.org.ac.siges.dao, pe.org.ac.siges.util" />
+
+
+	<bean id="log4jInitialization"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>${logs.dir}/log.config</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- catalina.properties 
+	logs.dir=D:/Workspace/log-->
+	<!-- server.xml  
+	 *** dentro de   <GlobalNamingResources>
+	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" 
+	initialSize="20" maxAge="7200000" maxIdle="20" maxTotal="75" 
+	maxWaitMillis="15000" name="jdbc/siges" password="mysql" 
+	testOnBorrow="true" type="javax.sql.DataSource" 
+	url="jdbc:mysql://192.168.2.111:3306/siges" 
+	username="siges" validationQuery="select 1"/>-->
+	<!-- context.xml 
+	<ResourceLink name="jdbc/siges" global="jdbc/siges" type="javax.sql.DataSource"/> -->
+	
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<property name="jndiName" value="java:comp/env/jdbc/siges"/>
+	</bean>
+	
+<!-- 	<bean id="dataSource" -->
+<!-- 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+<!-- 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" /> -->
+<!-- 		<property name="url" value="jdbc:sqlserver://192.168.2.4\SQL2014R2;DatabaseName=db_sicex" /> -->
+<!-- 		<property name="username" value="sicex" /> -->
+<!-- 		<property name="password" value="123456" />		 -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+<!-- 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/> -->
+<!-- 	    <property name="url" value="jdbc:mysql://192.168.2.111:3306/siges"/> -->
+<!-- 	    <property name="username" value="root"/> -->
+<!-- 	    <property name="password" value="mysql"/> -->
+<!-- 	</bean> -->
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatisConf.xml" />
+	</bean>
+
+</beans>

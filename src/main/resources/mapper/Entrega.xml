@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="entregaXml">
+
+	<insert id="insert" parameterType="entr" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO TBL_ENTREGA (TICKET, FECHA, HORA, CONDUCTOR, 
+			DESTINO, VEHICULO, DIESEL, CAPACIDAD)
+		VALUES (#{ticket}, #{fecha}, #{hora}, #{conductor.id}, 
+			#{destino.id}, #{vehiculo.id}, #{diesel}, #{capacidad})
+	</insert>
+
+	<delete id="delete" parameterType="entr">
+		DELETE from TBL_ENTREGA
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+		</where>
+	</delete>
+
+	<resultMap id="rslt" type="entr">
+		<result property="id" column="ID" />
+		<result property="ticket" column="TICKET" />
+		<result property="fecha" column="FECHA" />
+		<result property="hora" column="HORA" />
+		<result property="conductor.id" column="CONDUCTOR" />
+		<result property="conductor.nombre" column="COND" />
+		<result property="destino.id" column="DESTINO" />
+		<result property="destino.nombre" column="DEST" />
+		<result property="vehiculo.id" column="VEHICULO" />
+		<result property="vehiculo.placa" column="NUM_PLACA" />
+		<result property="diesel" column="DIESEL" />
+		<result property="capacidad" column="CAPACIDAD" />
+	</resultMap>
+
+	<select id="get" resultMap="rslt" parameterType="entr">
+		SELECT A.ID, A.TICKET, A.FECHA, A.HORA, A.CONDUCTOR, B.NOMBRE COND, 
+			A.DESTINO, D.NOMBRE DEST, A.VEHICULO, C.NUM_PLACA, A.DIESEL, A.CAPACIDAD
+		from TBL_ENTREGA A 
+		LEFT JOIN TBL_CONDUCTOR B ON A.CONDUCTOR = B.ID
+		LEFT JOIN TBL_VEHICULO C ON A.VEHICULO = C.ID
+		LEFT JOIN TBL_DESTINO D ON A.DESTINO = D.ID
+		<where>
+			<if test="id!=null and id!=''">
+				and A.ID = #{id}
+			</if>
+			<if test="fecAuxI!=null and fecAuxI!='' and fecAuxF!=null and fecAuxF!=''">				
+				and A.FECHA between str_to_date(#{fecAuxI}, '%d/%m/%Y') 
+								and str_to_date(#{fecAuxF}, '%d/%m/%Y')
+			
+<!-- 				and A.FECHA between convert(datetime, #{fecAuxI}, 103) and -->
+<!-- 				convert(datetime, #{fecAuxF}, 103) -->
+			</if>
+			<if test="vehiculo!=null">
+				<if test="vehiculo.id!=null and vehiculo.id!=''">
+					and A.VEHICULO = #{vehiculo.id}
+				</if>				
+			</if>
+			<if test="destino!=null">
+				<if test="destino.id!=null and destino.id!=''">
+					and A.DESTINO = #{destino.id}
+				</if>				
+			</if>
+			<if test="conductor!=null">
+				<if test="conductor.id!=null and conductor.id!=''">
+					and A.CONDUCTOR = #{conductor.id}
+				</if>				
+			</if>
+		</where>
+		order by A.FECHA desc
+	</select>
+
+	<update id="update" parameterType="entr">
+		UPDATE TBL_ENTREGA
+		set TICKET = #{ticket},
+		FECHA = #{fecha},
+		HORA = #{hora},
+		CONDUCTOR =  #{conductor.id},
+		DESTINO = #{destino.id},
+		VEHICULO = #{vehiculo.id},
+		DIESEL = #{diesel},
+		CAPACIDAD = #{capacidad}
+		WHERE ID = #{id}
+	</update>
+
+	<resultMap id="rsltRptDbV" type="rptDbV">
+		<result property="codDestino" column="DESTINO" />
+		<result property="nomDestino" column="NOMBRE" />
+		<result property="codVehiculo" column="VEHICULO" />
+		<result property="nomVehiculo" column="NUM_PLACA" />
+		<result property="canViaje" column="CANT" />
+		<result property="diesel" column="DIES" />		
+	</resultMap>
+	
+	<select id="getRptDbV" resultMap="rsltRptDbV" parameterType="entr">
+<!-- 		SELECT  A.DESTINO, B.NOMBRE , A.VEHICULO, C.NUM_PLACA, COUNT(A.VEHICULO) CANT, sum(convert(Float,DIESEL)) DIES -->
+		SELECT  A.DESTINO, B.NOMBRE , A.VEHICULO, C.NUM_PLACA, COUNT(A.VEHICULO) CANT, sum(DIESEL) DIES
+		from TBL_ENTREGA A
+		LEFT JOIN TBL_DESTINO B ON A.DESTINO = B.ID
+		LEFT JOIN TBL_VEHICULO C ON A.VEHICULO = C.ID
+		<where>
+			<if test="fecAuxI!=null and fecAuxI!='' and fecAuxF!=null and fecAuxF!=''">
+				and A.FECHA between str_to_date(#{fecAuxI}, '%d/%m/%Y') 
+								and str_to_date(#{fecAuxF}, '%d/%m/%Y')
+<!-- 				and A.FECHA between convert(datetime, #{fecAuxI}, 103) and -->
+<!-- 				convert(datetime, #{fecAuxF}, 103) -->
+			</if>
+		</where>
+		GROUP BY A.DESTINO, B.NOMBRE , A.VEHICULO, C.NUM_PLACA
+		ORDER BY B.NOMBRE, C.NUM_PLACA
+	</select>
+	
+	<resultMap id="rsltRptDbC" type="rptDbC">
+		<result property="codDestino" column="DESTINO" />
+		<result property="nomDestino" column="NOMBRE" />
+		<result property="codConductor" column="CONDUCTOR" />
+		<result property="nomConductor" column="CONDU" />
+		<result property="canViaje" column="CANT" />	
+	</resultMap>
+	
+	<select id="getRptDbC" resultMap="rsltRptDbC" parameterType="entr">
+		SELECT  A.DESTINO, B.NOMBRE , A.CONDUCTOR, C.NOMBRE CONDU, COUNT(A.CONDUCTOR) CANT
+		from TBL_ENTREGA A
+		LEFT JOIN TBL_DESTINO B ON A.DESTINO = B.ID
+		LEFT JOIN TBL_CONDUCTOR C ON A.CONDUCTOR = C.ID
+		<where>
+			<if test="fecAuxI!=null and fecAuxI!='' and fecAuxF!=null and fecAuxF!=''">
+				and A.FECHA between str_to_date(#{fecAuxI}, '%d/%m/%Y') 
+								and str_to_date(#{fecAuxF}, '%d/%m/%Y')
+<!-- 				and A.FECHA between convert(datetime, #{fecAuxI}, 103) and -->
+<!-- 				convert(datetime, #{fecAuxF}, 103) -->
+			</if>
+		</where>
+		GROUP BY A.DESTINO, B.NOMBRE , A.CONDUCTOR, C.NOMBRE
+		ORDER BY B.NOMBRE, C.NOMBRE
+	</select>
+	
+	
+	<resultMap id="rsltRptDbT" type="rptDbT">
+		<result property="codDestino" column="DESTINO" />
+		<result property="nomDestino" column="NOMBRE" />
+		<result property="ticket" column="TICKET" />
+		<result property="fecha" column="FECHA" />	
+	</resultMap>
+	
+	<select id="getRptDbT" resultMap="rsltRptDbT" parameterType="entr">
+		SELECT  A.DESTINO, B.NOMBRE ,A.TICKET, A.FECHA
+		from TBL_ENTREGA A
+		LEFT JOIN TBL_DESTINO B ON A.DESTINO = B.ID		
+		<where>
+			<if test="fecAuxI!=null and fecAuxI!='' and fecAuxF!=null and fecAuxF!=''">
+				and A.FECHA between str_to_date(#{fecAuxI}, '%d/%m/%Y') 
+								and str_to_date(#{fecAuxF}, '%d/%m/%Y')
+<!-- 				and A.FECHA between convert(datetime, #{fecAuxI}, 103) and -->
+<!-- 				convert(datetime, #{fecAuxF}, 103) -->
+			</if>
+		</where>
+		ORDER BY B.NOMBRE	
+	</select>
+
+</mapper>

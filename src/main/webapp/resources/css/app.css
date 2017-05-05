@@ -1,0 +1,76 @@
+
+html{
+	background-color:#2F2F2F;
+}
+
+body, #mainWrapper {
+	height: 100%;
+	background-image: -webkit-gradient(
+	linear,
+	right bottom,
+	right top,
+	/*color-stop(0, #EDEDED),
+	color-stop(0.08, #EAEAEA),
+	color-stop(1, #2F2F2F),
+	color-stop(1, #AAAAAA)*/
+	color-stop(0, #01589c),
+	color-stop(0.08, #01487E),
+	color-stop(1, #0279D4),
+	color-stop(1, #649DC8)
+);
+/*background-image: -o-linear-gradient(top, #EDEDED 0%, #EAEAEA 8%, #2F2F2F 100%, #AAAAAA 100%);
+background-image: -moz-linear-gradient(top, #EDEDED 0%, #EAEAEA 8%, #2F2F2F 100%, #AAAAAA 100%);
+background-image: -webkit-linear-gradient(top, #EDEDED 0%, #EAEAEA 8%, #2F2F2F 100%, #AAAAAA 100%);
+background-image: -ms-linear-gradient(top, #EDEDED 0%, #EAEAEA 8%, #2F2F2F 100%, #AAAAAA 100%);
+background-image: linear-gradient(to top, #EDEDED 0%, #EAEAEA 8%, #2F2F2F 100%, #AAAAAA 100%);*/
+
+background-image: -o-linear-gradient(top, #01589c 0%, #01487E 8%, #0279D4 100%, #649DC8 100%);
+background-image: -moz-linear-gradient(top, #01589c 0%, #01487E 8%, #0279D4 100%, #649DC8 100%);
+background-image: -webkit-linear-gradient(top, #01589c 0%, #01487E 8%, #0279D4 100%, #649DC8 100%);
+background-image: -ms-linear-gradient(top, #01589c 0%, #01487E 8%, #0279D4 100%, #649DC8 100%);
+background-image: linear-gradient(to top, #01589c 0%, #01487E 8%, #0279D4 100%, #649DC8 100%);
+
+
+}
+
+body, #mainWrapper, .form-control{
+	font-size:14px!important;
+}
+
+#mainWrapper {
+	/*height: 720px; Without explicit px values, % in children's does not work*/
+	height: 100vh; /*with Viewport-Percentage, we can handles all devices screens  */
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:10px;
+}
+
+#authHeaderWrapper{
+	clear:both;
+	width: 100%;
+	height:3%;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.login-container {
+    margin-top: 100px;
+    background-color: floralwhite;
+    width: 40%;
+    left: 30%;
+    position: absolute;
+}
+
+.login-card {
+    width: 80%;
+    margin: auto;
+}
+.login-form {
+	padding:3% 10% 10% 10%;
+    /*padding: 10%;*/
+}
+.classH1{
+	color: #01589c !important;
+	/*color: #03B8EE !important;*/
+    font-weight: bold;
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="vehiculoXml">
+
+<insert id="insert" parameterType="vehic" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO TBL_VEHICULO (NUM_PLACA, MARCA)
+		VALUES (#{placa}, #{marca})
+	</insert>
+
+	<delete id="delete" parameterType="vehic">
+		DELETE from TBL_VEHICULO
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>			
+		</where>
+	</delete>
+
+	<resultMap id="rslt" type="vehic">
+		<result property="id" column="ID" />
+		<result property="placa" column="NUM_PLACA" />
+		<result property="marca" column="MARCA" />
+		
+	</resultMap>
+
+	<select id="get" resultMap="rslt" parameterType="vehic">
+		SELECT ID, NUM_PLACA, MARCA
+		from TBL_VEHICULO
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="placa!=null and placa!=''">
+				and NUM_PLACA = #{placa}
+			</if>
+		</where>
+	</select>
+
+	<update id="update" parameterType="vehic">
+		UPDATE TBL_VEHICULO
+		set NUM_PLACA = #{placa},
+		MARCA = #{marca}
+		WHERE ID = #{id}
+	</update>
+
+</mapper>

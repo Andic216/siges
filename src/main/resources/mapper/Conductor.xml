@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="conductorXml">
+
+	<insert id="insert" parameterType="conduc" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO TBL_CONDUCTOR (NUM_DOCUMENTO, NOMBRE)
+		VALUES (#{dni}, #{nombre})
+	</insert>
+
+	<delete id="delete" parameterType="conduc">
+		DELETE from TBL_CONDUCTOR
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>			
+		</where>
+	</delete>
+
+	<resultMap id="rslt" type="conduc">
+		<result property="id" column="ID" />
+		<result property="dni" column="NUM_DOCUMENTO" />
+		<result property="nombre" column="NOMBRE" />
+		
+	</resultMap>
+
+	<select id="get" resultMap="rslt" parameterType="conduc">
+		SELECT ID, NUM_DOCUMENTO, NOMBRE
+		from TBL_CONDUCTOR
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="nombre!=null and nombre!=''">
+				and NOMBRE = #{nombre}
+			</if>
+		</where>
+	</select>
+
+	<update id="update" parameterType="conduc">
+		UPDATE TBL_CONDUCTOR
+		set NOMBRE = #{nombre},
+		NUM_DOCUMENTO = #{dni}
+		WHERE ID = #{id}
+	</update>
+
+</mapper>

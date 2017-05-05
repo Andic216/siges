@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="usua" type="pe.org.ac.siges.domain.Usuario"/>
+		<typeAlias alias="conduc" type="pe.org.ac.siges.domain.Conductor"/>
+		<typeAlias alias="desti" type="pe.org.ac.siges.domain.Destino"/>
+		<typeAlias alias="entr" type="pe.org.ac.siges.domain.Entrega"/>
+		<typeAlias alias="vehic" type="pe.org.ac.siges.domain.Vehiculo"/>
+		<typeAlias alias="rptDbV" type="pe.org.ac.siges.domain.ReporteDesByVeh"/>
+		<typeAlias alias="rptDbC" type="pe.org.ac.siges.domain.ReporteDesByCon"/>
+		<typeAlias alias="rptDbT" type="pe.org.ac.siges.domain.ReporteDesByTic"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mapper/Usuario.xml" />
+		<mapper resource="mapper/Conductor.xml" />
+		<mapper resource="mapper/Destino.xml" />
+		<mapper resource="mapper/Entrega.xml" />
+		<mapper resource="mapper/Vehiculo.xml" />
+	</mappers>
+
+</configuration>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="destinoXml">
+
+	<insert id="insert" parameterType="desti" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO TBL_DESTINO (CODIGO, NOMBRE)
+		VALUES (#{codigo}, #{nombre})
+	</insert>
+
+	<delete id="delete" parameterType="desti">
+		DELETE from TBL_DESTINO
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+		</where>
+	</delete>
+
+	<resultMap id="rslt" type="desti">
+		<result property="id" column="ID" />
+		<result property="codigo" column="CODIGO" />
+		<result property="nombre" column="NOMBRE" />
+
+	</resultMap>
+
+	<select id="get" resultMap="rslt" parameterType="desti">
+		SELECT ID, CODIGO, NOMBRE
+		from TBL_DESTINO
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="nombre!=null and nombre!=''">
+				and NUM_PLACA = #{nombre}
+			</if>
+		</where>
+	</select>
+
+	<update id="update" parameterType="desti">
+		UPDATE TBL_DESTINO
+		set CODIGO = #{codigo},
+		NOMBRE = #{nombre}
+		WHERE ID = #{id}
+	</update>
+
+</mapper>
